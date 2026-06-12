@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aqui, Bibia • Treinos</title>
+
+    <link rel="stylesheet" href="../src/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>💪 Treinos</h1>
+        <p>Cada treino é uma promessa que você cumpre com você mesma.</p>
+    </header>
+
+    <main>
+
+        <section class="card destaque-card">
+            <h2>🔥 Sua sequência</h2>
+            <p id="streak-treino" class="streak-grande">—</p>
+            <button id="btn-treinei" class="btn-big">💪 Treinei hoje!</button>
+            <p id="treino-status" class="hint"></p>
+            <button id="btn-remover-treino" class="btn-perigo" style="display:none;">
+                🗑️ Remover treino de hoje (marquei sem querer)
+            </button>
+        </section>
+
+        <section class="card">
+            <h2>🏋️ O que você treinou?</h2>
+            <p class="hint">Pode marcar mais de um!</p>
+            <div id="chips-grupos" class="chips"></div>
+
+            <div class="cardio-wrap">
+                <button class="check-item" id="chk-cardio">🏃 Fiz cardio</button>
+                <input type="number" id="cardio-min" min="1" max="300" inputmode="numeric"
+                    placeholder="Quantos minutos?" style="display:none;">
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📸 Foto do treino de hoje</h2>
+            <p class="hint">Registre esse momento de vitória!</p>
+
+            <label class="upload-label" for="foto-treino">
+                📷 Escolher foto
+            </label>
+            <input type="file" id="foto-treino" accept="image/*" hidden>
+
+            <div id="preview-treino" class="foto-grid"></div>
+        </section>
+
+        <section class="card">
+            <h2>🗓️ Histórico de treinos</h2>
+            <div id="historico-treinos">
+                <p class="empty-message">Nenhum treino registrado ainda. O primeiro é sempre o mais especial! 💙</p>
+            </div>
+        </section>
+
+    </main>
+
+    <nav>
+        <a href="../index.html" aria-label="Início">🏠</a>
+        <a href="treinos.html" class="ativo" aria-label="Treinos">💪</a>
+        <a href="dieta.html" aria-label="Dieta">🥗</a>
+        <a href="estudos.html" aria-label="Estudos">📚</a>
+        <a href="agenda.html" aria-label="Agenda">📅</a>
+        <a href="fotos.html" aria-label="Nossos momentos">📷</a>
+        <a href="recados.html" aria-label="Recados">💌</a>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
+    <script src="../src/js/firebase.js"></script>
+    <script src="../src/js/auth.js"></script>
+    <script src="../src/js/app.js"></script>
+    <script src="../src/js/treinos.js"></script>
+
+</body>
+</html>

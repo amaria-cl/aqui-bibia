@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aqui, Bibia</title>
+
+    <link rel="stylesheet" href="src/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>Aqui, Bibia 💙</h1>
+        <p>Esse espaço foi feito especialmente para você.</p>
+        <p>Para organizar seus estudos, acompanhar seus treinos e te lembrar todos os dias do quanto eu acredito em você.</p>
+        <p id="quem-sou" class="quem-sou"></p>
+    </header>
+
+    <main>
+
+        <section class="card message-card">
+            <h2>💌 Mensagem do dia</h2>
+            <p id="msg-dia">Tenho muito orgulho de você!</p>
+        </section>
+
+        <section class="card">
+            <h2 id="titulo-resumo">✨ Resumo de hoje</h2>
+            <ul>
+                <li id="resumo-treino">💪 Treino: Pendente</li>
+                <li id="resumo-dieta">🥗 Dieta: Pendente</li>
+                <li id="resumo-estudos">📚 Estudos: Pendente</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h2>🔥 Sequência atual</h2>
+            <p id="streak-info">Comece uma sequência de treinos!</p>
+        </section>
+
+        <section class="card" id="card-admin" style="display:none;">
+            <h2>👀 Como a Bibia está hoje</h2>
+            <div id="admin-conteudo"><p>Carregando...</p></div>
+        </section>
+
+        <section class="card" id="card-recados" style="display:none;">
+            <h2>💌 Bilhete novo!</h2>
+            <p id="recados-novos"></p>
+        </section>
+
+        <section class="card">
+            <h2>📷 Nosso momento</h2>
+            <div id="momento-destaque">
+                <p>Guarde fotos de vocês na aba 📷 Nossos momentos!</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>📸 Última conquista</h2>
+            <div id="conquista">
+                <p>Você entrou no Aqui, Bibia! 🎉</p>
+            </div>
+        </section>
+
+        <section class="card" id="card-agenda">
+            <h2>📅 Próximo compromisso</h2>
+            <p id="prox-compromisso">Nenhum compromisso encontrado.</p>
+        </section>
+
+    </main>
+
+    <nav>
+        <a href="index.html" class="ativo" aria-label="Início">🏠</a>
+        <a href="pages/treinos.html" aria-label="Treinos">💪</a>
+        <a href="pages/dieta.html" aria-label="Dieta">🥗</a>
+        <a href="pages/estudos.html" aria-label="Estudos">📚</a>
+        <a href="pages/agenda.html" aria-label="Agenda">📅</a>
+        <a href="pages/fotos.html" aria-label="Nossos momentos">📷</a>
+        <a href="pages/recados.html" aria-label="Recados">💌</a>
+    </nav>
+
+    <!-- Firebase via CDN (modo compat: sem npm, sem imports) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
+    <script src="src/js/firebase.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/app.js"></script>
+
+</body>
+
+</html>
