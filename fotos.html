@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aqui, Bibia • Agenda</title>
+
+    
+    <link rel="icon" type="image/png" href="../src/img/favicon.png">
+    <link rel="apple-touch-icon" href="../src/img/apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#6366f1">
+
+    <link rel="stylesheet" href="../src/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>📅 Agenda</h1>
+        <p>Organize seus compromissos, estudos e momentos importantes.</p>
+    </header>
+
+    <main>
+
+        <section class="card">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="mensal">📅 Mensal</button>
+                <button class="tab-btn" data-tab="anual">🗓️ Anual</button>
+            </div>
+        </section>
+
+        <!-- CALENDÁRIO MENSAL -->
+        <section id="tab-mensal" class="tab-panel active">
+
+            <section class="card">
+                <div class="calendar-header">
+                    <button id="mes-ant" aria-label="Mês anterior">←</button>
+                    <h2 id="cal-mes-ano">—</h2>
+                    <button id="mes-prox" aria-label="Próximo mês">→</button>
+                </div>
+
+                <div class="weekdays">
+                    <span>Dom</span><span>Seg</span><span>Ter</span>
+                    <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+                </div>
+
+                <div id="cal-grid" class="calendar-grid"></div>
+            </section>
+
+            <!-- Próximos eventos -->
+            <section class="card">
+                <h2>📌 O que vem por aí</h2>
+                <div id="lista-proximos">
+                    <p class="empty-message">
+                        Nenhum compromisso por enquanto.
+                        Aproveita pra descansar um pouquinho, Bibia 💙
+                    </p>
+                </div>
+            </section>
+
+            <!-- Dia selecionado -->
+            <section id="dia-wrap" class="card" style="display:none;">
+                <div class="day-header">
+                    <h2 id="dia-titulo">Dia selecionado</h2>
+                    <button id="btn-add-dia" class="btn-primary">+ Novo evento</button>
+                </div>
+                <div id="dia-content"></div>
+            </section>
+
+        </section>
+
+        <!-- VISÃO ANUAL -->
+        <section id="tab-anual" class="tab-panel">
+            <section class="card">
+                <div class="calendar-header">
+                    <button id="ano-ant" aria-label="Ano anterior">←</button>
+                    <h2 id="ano-titulo">—</h2>
+                    <button id="ano-prox" aria-label="Próximo ano">→</button>
+                </div>
+                <div id="ano-grid" class="ano-grid"></div>
+            </section>
+        </section>
+
+        <!-- NOVO EVENTO -->
+        <section class="card">
+            <h2>➕ Novo compromisso</h2>
+            <button id="btn-novo-evento" class="btn-primary btn-big">Adicionar evento</button>
+        </section>
+
+    </main>
+
+    <!-- MODAL DE EVENTO -->
+    <div id="modal-evento" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-fechar" aria-label="Fechar">✕</button>
+            <h2>💜 Novo compromisso</h2>
+
+            <input type="text" id="ev-titulo" placeholder="Título (ex: Prova de Anatomia)" maxlength="60">
+            <input type="date" id="ev-data">
+            <input type="time" id="ev-hora">
+            <textarea id="ev-descricao" rows="2" maxlength="200"
+                placeholder="Alguma observação? (opcional)"></textarea>
+
+            <button id="ev-salvar" class="btn-primary btn-big">Salvar compromisso</button>
+        </div>
+    </div>
+
+    <nav>
+        <a href="../index.html" aria-label="Início">🏠</a>
+        <a href="treinos.html" aria-label="Treinos">💪</a>
+        <a href="dieta.html" aria-label="Dieta">🥗</a>
+        <a href="estudos.html" aria-label="Estudos">📚</a>
+        <a href="agenda.html" class="ativo" aria-label="Agenda">📅</a>
+        <a href="fotos.html" aria-label="Nossos momentos">📷</a>
+        <a href="recados.html" aria-label="Recados">💌</a>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
+    <script src="../src/js/firebase.js"></script>
+    <script src="../src/js/auth.js"></script>
+    <script src="../src/js/app.js"></script>
+    <script src="../src/js/agenda.js"></script>
+
+</body>
+</html>
