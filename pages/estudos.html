@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Aqui, Bibia • Estudos</title>
+
+    
+    <link rel="icon" type="image/png" href="../src/img/favicon.png">
+    <link rel="apple-touch-icon" href="../src/img/apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#6366f1">
+
+    <link rel="stylesheet" href="../src/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>📚 Estudos</h1>
+        <p>Cada matéria vencida te deixa mais perto do seu sonho.</p>
+    </header>
+
+    <main>
+
+        <!-- Estatísticas -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-num" id="stat-materias">0</span>
+                <span class="stat-label">Matérias</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num" id="stat-atividades">0</span>
+                <span class="stat-label">Atividades</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-num stat-verde" id="stat-concluidas">0</span>
+                <span class="stat-label">Concluídas</span>
+            </div>
+        </section>
+
+        <!-- Progresso geral -->
+        <section class="card">
+            <div class="progress-row">
+                <h2>✨ Progresso geral</h2>
+                <span id="pct-geral" class="hint">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="prog-geral" style="width:0%;"></div>
+            </div>
+        </section>
+
+        <!-- Matérias -->
+        <section class="card">
+            <div class="day-header">
+                <h2>📖 Suas matérias</h2>
+                <button id="btn-nova-materia" class="btn-primary">+ Nova</button>
+            </div>
+            <div id="lista-materias">
+                <p class="empty-message">Nenhuma matéria ainda. Crie a primeira! ✨</p>
+            </div>
+        </section>
+
+        <!-- Tempo de estudo -->
+        <section class="card destaque-card">
+            <h2>⏱️ Hoje você estudou</h2>
+            <p id="total-hoje" class="streak-grande">0 min</p>
+            <p id="total-semana" class="hint"></p>
+
+            <div class="form-coluna">
+                <input type="text" id="materia" list="datalist-materias"
+                    placeholder="Matéria (ex: Anatomia)" maxlength="40">
+                <datalist id="datalist-materias"></datalist>
+                <input type="number" id="minutos" placeholder="Tempo em minutos"
+                    min="1" max="600" inputmode="numeric">
+                <button id="btn-add-estudo" class="btn-primary btn-big">⏱️ Registrar tempo</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🗓️ Tempos registrados</h2>
+            <div id="lista-estudos">
+                <p class="empty-message">Nenhum estudo registrado ainda. Bora começar? ✨</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal nova/editar matéria -->
+    <div id="modal-materia" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-mat-fechar" aria-label="Fechar">✕</button>
+            <h2 id="modal-mat-titulo">💜 Nova matéria</h2>
+
+            <input type="text" id="mat-nome" placeholder="Nome (ex: Anatomia, Física Radiológica...)" maxlength="40">
+
+            <p class="hint">Cor da matéria:</p>
+            <div id="color-picker" class="color-picker"></div>
+
+            <button id="btn-salvar-materia" class="btn-primary btn-big">Criar matéria</button>
+        </div>
+    </div>
+
+    <nav>
+        <a href="../index.html" aria-label="Início">🏠</a>
+        <a href="treinos.html" aria-label="Treinos">💪</a>
+        <a href="dieta.html" aria-label="Dieta">🥗</a>
+        <a href="estudos.html" class="ativo" aria-label="Estudos">📚</a>
+        <a href="agenda.html" aria-label="Agenda">📅</a>
+        <a href="fotos.html" aria-label="Nossos momentos">📷</a>
+        <a href="recados.html" aria-label="Recados">💌</a>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
+    <script src="../src/js/firebase.js"></script>
+    <script src="../src/js/auth.js"></script>
+    <script src="../src/js/app.js"></script>
+    <script src="../src/js/estudos.js"></script>
+
+</body>
+</html>
