@@ -1,213 +1,106 @@
-/* =====================================================
-   AQUI, BIBIA — Treinos
-   Coleção "treinos": id = data (YYYY-MM-DD)
-   { data, fotoUrl?, grupos: [], cardio: bool, cardioMin: n }
-   ===================================================== */
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-const GRUPOS = ["Glúteo", "Quadríceps", "Inferiores", "Costas", "Bíceps",
-                "Tríceps", "Ombro", "Peito", "Abdômen", "Lombar", "Panturrilha"];
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-let treinoHoje = null;
+    <title>Aqui, Bibia</title>
 
-document.addEventListener("DOMContentLoaded", iniciarTreinos);
+    
+    <link rel="icon" type="image/png" href="src/img/favicon.png">
+    <link rel="apple-touch-icon" href="src/img/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
 
-async function iniciarTreinos() {
-    document.getElementById("btn-treinei")
-        .addEventListener("click", registrarTreino);
-    document.getElementById("btn-remover-treino")
-        .addEventListener("click", removerTreinoHoje);
-    document.getElementById("foto-treino")
-        .addEventListener("change", enviarFotoTreino);
+    <link rel="stylesheet" href="src/css/style.css">
 
-    // Chips dos grupos musculares
-    const chips = document.getElementById("chips-grupos");
-    chips.innerHTML = GRUPOS.map(g =>
-        "<button class='chip' data-grupo='" + g + "'>" + g + "</button>"
-    ).join("");
-    chips.querySelectorAll(".chip").forEach(c => {
-        c.addEventListener("click", () => alternarGrupo(c.dataset.grupo));
-    });
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
 
-    // Cardio
-    document.getElementById("chk-cardio")
-        .addEventListener("click", alternarCardio);
-    document.getElementById("cardio-min")
-        .addEventListener("change", salvarCardioMin);
+<body>
 
-    await atualizarTela();
-}
+    <header>
+        <h1>Aqui, Bibia 💙</h1>
+        <p>Esse espaço foi feito especialmente para você.</p>
+        <p>Para organizar seus estudos, acompanhar seus treinos e te lembrar todos os dias do quanto eu acredito em você.</p>
+        <p id="quem-sou" class="quem-sou"></p>
+    </header>
 
-async function garantirTreinoHoje() {
-    const hoje = hojeISO();
-    if (!treinoHoje) {
-        treinoHoje = { data: hoje, grupos: [], cardio: false, cardioMin: 0 };
-    }
-    return treinoHoje;
-}
+    <main>
 
-async function registrarTreino() {
-    if (treinoHoje) {
-        toast("Você já registrou o treino de hoje! 🎉");
-        return;
-    }
-    await garantirTreinoHoje();
-    await DB.salvar("treinos", treinoHoje.data, treinoHoje);
-    toast("Treino registrado! Orgulho de você 💙");
-    await atualizarTela();
-}
+        <section class="card message-card">
+            <h2>💌 Mensagem do dia</h2>
+            <p id="msg-dia">Tenho muito orgulho de você!</p>
+        </section>
 
-async function removerTreinoHoje() {
-    if (!treinoHoje) return;
-    if (!confirm("Remover o treino de hoje? (caso tenha marcado sem querer)")) return;
+        <section class="card">
+            <h2 id="titulo-resumo">✨ Resumo de hoje</h2>
+            <ul>
+                <li id="resumo-treino">💪 Treino: Pendente</li>
+                <li id="resumo-dieta">🥗 Dieta: Pendente</li>
+                <li id="resumo-estudos">📚 Estudos: Pendente</li>
+            </ul>
+        </section>
 
-    await DB.excluir("treinos", hojeISO());
-    treinoHoje = null;
-    toast("Treino de hoje removido.");
-    await atualizarTela();
-}
+        <section class="card">
+            <h2>🔥 Sequência atual</h2>
+            <p id="streak-info">Comece uma sequência de treinos!</p>
+        </section>
 
-async function removerTreinoDia(id) {
-    if (!confirm("Remover o treino de " + formatarData(id) + "?")) return;
-    await DB.excluir("treinos", id);
-    if (id === hojeISO()) treinoHoje = null;
-    toast("Treino removido.");
-    await atualizarTela();
-}
+        <section class="card" id="card-admin" style="display:none;">
+            <h2>👀 Como a Bibia está hoje</h2>
+            <div id="admin-conteudo"><p>Carregando...</p></div>
+        </section>
 
-/* Marcar um grupo muscular já registra o treino do dia */
-async function alternarGrupo(grupo) {
-    await garantirTreinoHoje();
-    treinoHoje.grupos = treinoHoje.grupos || [];
+        <section class="card" id="card-recados" style="display:none;">
+            <h2>💌 Bilhete novo!</h2>
+            <p id="recados-novos"></p>
+        </section>
 
-    const i = treinoHoje.grupos.indexOf(grupo);
-    if (i >= 0) treinoHoje.grupos.splice(i, 1);
-    else treinoHoje.grupos.push(grupo);
+        <section class="card">
+            <h2>📷 Nosso momento</h2>
+            <div id="momento-destaque">
+                <p>Guarde fotos de vocês na aba 📷 Nossos momentos!</p>
+            </div>
+        </section>
 
-    await DB.salvar("treinos", treinoHoje.data, treinoHoje);
-    await atualizarTela();
-}
+        <section class="card">
+            <h2>📸 Última conquista</h2>
+            <div id="conquista">
+                <p>Você entrou no Aqui, Bibia! 🎉</p>
+            </div>
+        </section>
 
-async function alternarCardio() {
-    await garantirTreinoHoje();
-    treinoHoje.cardio = !treinoHoje.cardio;
-    if (!treinoHoje.cardio) treinoHoje.cardioMin = 0;
+        <section class="card" id="card-agenda">
+            <h2>📅 Próximo compromisso</h2>
+            <p id="prox-compromisso">Nenhum compromisso encontrado.</p>
+        </section>
 
-    await DB.salvar("treinos", treinoHoje.data, treinoHoje);
-    await atualizarTela();
-}
+    </main>
 
-async function salvarCardioMin() {
-    if (!treinoHoje) return;
-    const min = Number(document.getElementById("cardio-min").value) || 0;
-    treinoHoje.cardioMin = min;
-    await DB.salvar("treinos", treinoHoje.data, treinoHoje);
-    if (min > 0) toast(min + " min de cardio anotados 🏃");
-}
+    <nav>
+        <a href="index.html" class="ativo" aria-label="Início">🏠</a>
+        <a href="pages/treinos.html" aria-label="Treinos">💪</a>
+        <a href="pages/dieta.html" aria-label="Dieta">🥗</a>
+        <a href="pages/estudos.html" aria-label="Estudos">📚</a>
+        <a href="pages/agenda.html" aria-label="Agenda">📅</a>
+        <a href="pages/fotos.html" aria-label="Nossos momentos">📷</a>
+        <a href="pages/recados.html" aria-label="Recados">💌</a>
+    </nav>
 
-async function enviarFotoTreino(ev) {
-    const file = ev.target.files[0];
-    if (!file) return;
+    <!-- Firebase via CDN (modo compat: sem npm, sem imports) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
 
-    toast("Enviando foto...");
-    try {
-        await garantirTreinoHoje();
-        const url = await DB.uploadFoto("treinos", file);
-        treinoHoje.fotoUrl = url;
-        await DB.salvar("treinos", treinoHoje.data, treinoHoje);
-        toast("Foto salva! 📸");
-        await atualizarTela();
-    } catch (e) {
-        toast("Não consegui enviar a foto. Tente de novo?");
-    }
-    ev.target.value = "";
-}
+    <script src="src/js/firebase.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/app.js"></script>
 
-function resumoTreino(t) {
-    const partes = [];
-    if (t.grupos && t.grupos.length) partes.push(t.grupos.join(", "));
-    if (t.cardio) partes.push("Cardio" + (t.cardioMin ? " " + t.cardioMin + "min" : ""));
-    return partes.join(" • ");
-}
+</body>
 
-async function atualizarTela() {
-    const hoje = hojeISO();
-    const treinos = await DB.listar("treinos");
-    treinos.sort((a, b) => (b.data || b.id).localeCompare(a.data || a.id));
-
-    treinoHoje = treinos.find(t => (t.data || t.id) === hoje) || treinoHoje;
-
-    // Streak
-    const streak = await calcularStreak();
-    document.getElementById("streak-treino").innerHTML =
-        streak > 0
-            ? "<span class='streak-num'>" + streak + "</span> dia" + (streak > 1 ? "s" : "") + " 🔥"
-            : "Comece hoje! ✨";
-
-    // Botões registrar/remover
-    const btn = document.getElementById("btn-treinei");
-    const btnRemover = document.getElementById("btn-remover-treino");
-    const status = document.getElementById("treino-status");
-    if (treinoHoje) {
-        btn.disabled = true;
-        btn.textContent = "✅ Treino de hoje registrado!";
-        btnRemover.style.display = "block";
-        status.textContent = "Volta amanhã pra manter a sequência 💙";
-    } else {
-        btn.disabled = false;
-        btn.textContent = "💪 Treinei hoje!";
-        btnRemover.style.display = "none";
-        status.textContent = "";
-    }
-
-    // Chips refletem o que foi treinado
-    const grupos = (treinoHoje && treinoHoje.grupos) || [];
-    document.querySelectorAll("#chips-grupos .chip").forEach(c => {
-        c.classList.toggle("on", grupos.indexOf(c.dataset.grupo) >= 0);
-    });
-
-    // Cardio
-    const cardioOn = !!(treinoHoje && treinoHoje.cardio);
-    document.getElementById("chk-cardio").classList.toggle("marcado", cardioOn);
-    const inputMin = document.getElementById("cardio-min");
-    inputMin.style.display = cardioOn ? "block" : "none";
-    if (cardioOn && document.activeElement !== inputMin) {
-        inputMin.value = treinoHoje.cardioMin || "";
-    }
-
-    // Preview da foto de hoje
-    const preview = document.getElementById("preview-treino");
-    if (treinoHoje && treinoHoje.fotoUrl) {
-        const src = await DB.resolverFoto(treinoHoje.fotoUrl);
-        preview.innerHTML = src
-            ? "<figure class='foto-card'><img src='" + src + "' alt='Treino de hoje'></figure>"
-            : "";
-    } else {
-        preview.innerHTML = "";
-    }
-
-    // Histórico
-    const hist = document.getElementById("historico-treinos");
-    if (!treinos.length) {
-        hist.innerHTML = "<p class='empty-message'>Nenhum treino registrado ainda. O primeiro é sempre o mais especial! 💙</p>";
-        return;
-    }
-
-    const recentes = treinos.slice(0, 30);
-    const fotos = await Promise.all(recentes.map(t => DB.resolverFoto(t.fotoUrl)));
-
-    hist.innerHTML = recentes.map((t, i) => {
-        const data = t.data || t.id;
-        const detalhe = resumoTreino(t);
-        return "<div class='lista-item'>" +
-            (fotos[i]
-                ? "<img src='" + fotos[i] + "' alt='Treino' class='thumb'>"
-                : "<span class='thumb thumb-vazio'>💪</span>") +
-            "<div class='item-info'>" +
-                "<strong>" + formatarData(data) + "</strong>" +
-                "<span class='item-sub'>" + diaDaSemana(data) +
-                    (detalhe ? " • " + detalhe : "") + "</span>" +
-            "</div>" +
-            "<button class='btn-icon' aria-label='Remover' onclick=\"removerTreinoDia('" + data + "')\">🗑️</button>" +
-        "</div>";
-    }).join("");
-}
+</html>
